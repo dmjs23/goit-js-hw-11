@@ -1,0 +1,10 @@
+.search-form {
+    display: flex;
+    justify-content: center;
+    background-color: blue;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.search-form>input {
+    border-radius: 5px;    
+}
