@@ -6,6 +6,8 @@ const input = document.querySelector("input")
 const btn = document.querySelector('button')
 
 async function getFoto(words) {
+  console.log("nacisnałes ");
+
     const apiKey = '15302977-99a8e51ff55a3c0e02bc236e3';
     const url = `https://pixabay.com/api/?key=${apiKey}&q=${words}&image_type=photo`
     const searchWord = toString(words)
@@ -22,7 +24,8 @@ async function getFoto(words) {
   }
 
 btn.addEventListener('submit', ()=> {
-    const result = input.value
-    getFoto(result)
+  const result = input.value;
+  console.log(result);
+  getFoto(result);
 });
 
