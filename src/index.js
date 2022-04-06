@@ -6,10 +6,10 @@ const input = document.querySelector("input")
 const btn = document.querySelector('button')
 
 async function getFoto(words) {
-    const apiKey = '26531596-66f70a56847dae6fbc6ddebb0';
+    const apiKey = '15302977-99a8e51ff55a3c0e02bc236e3';
     const url = `https://pixabay.com/api/?key=${apiKey}&q=${words}&image_type=photo`
-    // const searchWord = toString(words)
-    // console.log(searchWord);
+    const searchWord = toString(words)
+    console.log(searchWord);
     try {
       const response = await axios.get(url);
       const data = response.data;
