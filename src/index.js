@@ -64,13 +64,13 @@ async function getFoto(word) {
     console.log(fotoArray);
     if (fotoArray.length < 1)
     {
-      Notiflix.Notify.failure("Oops, coś poszło żle");
+      Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
       return 0;
       }
     galleryItemsAdd(fotoArray);
     return fotoArray;
   } catch (error) {
-    Notiflix.Notify.failure("Oops, coś poszło żle");
+    Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
     console.log(error);
   }
 };
