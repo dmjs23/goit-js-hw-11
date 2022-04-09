@@ -2,67 +2,73 @@ import './sass/main.scss';
 import axios, { Axios } from 'axios';
 import Notiflix from 'notiflix';
 
-//DOM import
-const input = document.querySelector("input")
-const btn = document.querySelector('button')
 
-//Base URL
-const apiKey = '26531596-66f70a56847dae6fbc6ddebb0';
-const url = `https://pixabay.com/api/?key=${apiKey}&q=car&image_type=photo`;
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
+
+//DOM import
+const $form = document.querySelector("form");
+const galleryBox = document.querySelector("div.gallery");
+
+//My API key
+const apiKey = '15302977-99a8e51ff55a3c0e02bc236e3';
+
+//nadpisanie zachowania domyslnego form
+const submitForm = (ev) => {
+    const $form = ev.currentTarget;
+    ev.preventDefault();
+
+    const { elements: {searchQuery}
+    } = $form;
+
+  getFoto(searchQuery.value);
+    $form.reset();
+}
+
+function galleryItemsAdd(galleryItems) {
+  console.log("tworzenie galeri");
+  galleryItems.forEach((el) => {
+    const galleryLink = document.createElement("a");
+    galleryLink.classList.add("gallery__link");
+    galleryLink.href = el.largeImageURL;
+
+    const galleryImage = document.createElement("img");
+    galleryImage.classList.add("gallery__image");
+    galleryImage.src = el.previewURL;
+    galleryImage.alt = el.tags;
+
+    galleryBox.append(galleryLink);
+    galleryLink.append(galleryImage);
+  });
+};
+
 //Fetch image from http
-async function getFoto() {
+async function getFoto(word) {
   try {
+    const url = `https://pixabay.com/api/?key=${apiKey}&q=${word}&image_type=photo`;
+    console.log(url);
     const response = await axios.get(url);
     const fotoArray = response.data.hits;
+    console.log(fotoArray);
+    galleryItemsAdd(fotoArray);
     return fotoArray;
   } catch (error) {
     console.log(error);
   }
 };
-const x = getFoto();
-//Create gallery funcion
-function createGallery(array) {
-  const gallery = array.map({
-    const test =`<div class="photo-card">
-      <img class="gallery__image" src="${array.webformatURL} "alt="${array.tags}" loading="lazy" />
-      <div class="info">
-        <p class="info-item">
-          <b>Likes</b>${array.likes}
-        </p>
-        <p class="info-item">
-          <b>Views</b>${array.views}
-        </p>
-        <p class="info-item">
-          <b>Comments</b>${array.comments}
-        </p>
-        <p class="info-item">
-          <b>Downloads</b>${array.downloads}
-        </p>
-      </div>
-    </div>`
-    return test
-    console.log(gallery);
+
+$form.addEventListener("submit", submitForm);
+
+galleryBox.addEventListener("click", (ev) => {
+  ev.preventDefault();
+  console.log(ev.target.alt);
+});
+galleryBox.onclick = (ev) => {
+  const lightbox = new SimpleLightbox(".gallery a", {
+    spinner: false,
+    captionsData: "alt",
+    captionPosition: "outside",
+    captionDelay: 250,
   });
-createGallery(x);
-//         `<div class="photo-card">
-//           <img class="gallery__image" src="${backendObj.webformatURL}" alt="${backendObj.tags}" loading="lazy" />
-//           <div class="info">
-//             <p class="info-item">
-//               <b>Likes</b>${backendObj.likes}
-//             </p>
-//             <p class="info-item">
-//               <b>Views</b>${backendObj.views}
-//             </p>
-//             <p class="info-item">
-//               <b>Comments</b>${backendObj.comments}
-//             </p>
-//             <p class="info-item">
-//               <b>Downloads</b>${backendObj.downloads}
-//             </p>
-//           </div>
-//         </div>`,
-//     )
-//     .join('');
-//   console.log(markup);
-// }
-// createGalleryTags(x)
+};
