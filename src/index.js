@@ -62,9 +62,15 @@ async function getFoto(word) {
     
     const fotoArray = response.data.hits;
     console.log(fotoArray);
+    if (fotoArray.length < 1)
+    {
+      Notiflix.Notify.failure("Oops, coś poszło żle");
+      return 0;
+      }
     galleryItemsAdd(fotoArray);
     return fotoArray;
   } catch (error) {
+    Notiflix.Notify.failure("Oops, coś poszło żle");
     console.log(error);
   }
 };
