@@ -48,15 +48,35 @@ function galleryItemsAdd(galleryItems) {
     galleryImage.src = el.previewURL;
     galleryImage.alt = el.tags;
 
+    // const galleryLike = document.createElement("div");
+    // galleryLike.classList.add("gallery__like")
+    // const element = el;
+    // const galleryArray = `
+    //   <p class="info-item">
+    //     <b>Likes</b>${element.likes}
+    //   </p>
+    //   <p class="info-item">
+    //     <b>Views</b>${element.views}
+    //   </p>
+    //   <p class="info-item">
+    //     <b>Comments</b>${element.comments}
+    //   </p>
+    //   <p class="info-item">
+    //     <b>Downloads</b>${element.downloads}
+    //   </p>`;
+    // galleryLike.innerHTML = galleryArray;
+
     galleryBox.append(galleryLink);
     galleryLink.append(galleryImage);
+    // galleryLink.append(galleryLike);
   });
 };
+
 
 //Fetch image from http
 async function getFoto(word) {
   try {
-    const url = `https://pixabay.com/api/?key=${apiKey}&q=${word}&image_type=photo&per_page=40&page=${pages}`;
+    const url = `https://pixabay.com/api/?key=${apiKey}&q=${word}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${pages}`;
     console.log(url);
     const response = await axios.get(url);
     
@@ -66,7 +86,8 @@ async function getFoto(word) {
     {
       Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
       return 0;
-      }
+    }
+    Notiflix.Notify.success("Hurra, We find it.");
     galleryItemsAdd(fotoArray);
     return fotoArray;
   } catch (error) {
